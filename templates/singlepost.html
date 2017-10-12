@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    
+            {% for blog in blogs %}
+            <a>{{blog.title}}</a>
+            <p>
+                {{blog.body}}
+                <form method='POST' style="display:inline-block">
+                    <input type="hidden" name="blog-id" value="{{blog.id}}"/>
+                </form>
+            </p>
+            {% endfor %}
+        
+    
+{% endblock %}

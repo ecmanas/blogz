@@ -49,11 +49,17 @@ def newpost():
         body_from_form = body
         body_error = ''
 
-        if title_from_form == "":
-            title_error = "please enter valid title"
-        if body_from_form == "":
-            body_error = "please enter valid body"  
+        if title_from_form == "" and body_from_form == "":
+            title_error = "please enter valid text"
+            body_error = "please enter valid text"
             return render_template('newpost.html', title_error = title_error, body_error = body_error)
+        if title_from_form == "":
+            title_error = "please enter valid text"
+            return render_template('newpost.html', title_error = title_error)
+        if body_from_form == "":
+            body_error = "please enter valid text"  
+            return render_template('newpost.html', body_error = body_error)
+        
         
         db.session.add(new_post)
         db.session.commit()

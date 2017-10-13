@@ -3,15 +3,16 @@
 {% block content %}
 
     
-            {% for blog in blogs %}
-            <a>{{blog.title}}</a>
+            
+            
+            <a>{{post.title}}</a>
             <p>
-                {{blog.body}}
+                {{post.body}}
                 <form method='POST' style="display:inline-block">
-                    <input type="hidden" name="blog-id" value="{{blog.id}}"/>
+                    <input type="hidden" name="blog-id" value="{{post.id}}"/>
                 </form>
             </p>
-            {% endfor %}
+            
         
     
 {% endblock %}

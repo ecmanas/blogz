@@ -2,21 +2,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Register to Get It Done!</h1>
+<h1>Sign-up!</h1>
 <form action="/signup" method="post">
     <table>
         <tr>
-            <td><label for="email">Email</label></td>
+            <td><label for="username">Username</label></td>
             <td>
-                <input name="email" type="email" value="{{ email }}">
+                <input name="username" type="text" value="{{ username }}">
             </td>
+            <p class="error">{{username_error}}</p>
         </tr>
+        
         <tr>
             <td><label for="password">Password</label></td>
             <td>
                 <input name="password" type="password">
             </td>
+            <p class="error">{{password_error}}</p>
         </tr>
+        
         <tr>
             <td><label for="verify">Verify Password</label></td>
             <td>

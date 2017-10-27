@@ -31,7 +31,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    allowed_routes = ['index', 'blog', 'login', 'signup', 'singlepost']
+    allowed_routes = ['index', 'blogposts', 'login', 'signup', 'singleuser', 'singlepost']
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
@@ -94,18 +94,22 @@ def logout():
     flash("Logged out")
     return redirect('/')
 
-@app.route('/singlepost', methods=['POST', 'GET'])
-def singlepost():
-    id = request.args.get('id')
-    post = Blog.query.filter_by(id=id).first()
-    return render_template('singlepost.html', post=post)
+@app.route('/blogposts', methods=['POST', 'GET'])
+def blogposts():
+    if request.args.get('id'):
+        id = request.args.get('id')
+        post = Blog.query.filter_by(id=id).first()
+        return render_template('singlepost.html', post=post)
 
-@app.route('/singleuser', methods=['POST','GET'])
-def singleuser():
-    user_id = request.args.get('user')
-    user_query = User.query.get(user_id)
-    all_posts = Blog.query.filter_by(owner=user_query).all()
-    return render_template('singleuser.html', all_posts=all_posts)
+    elif request.args.get('user'):
+        user_id = request.args.get('user')
+        user_query = User.query.get(user_id)
+        all_posts = Blog.query.filter_by(owner=user_query).all()
+        return render_template('singleuser.html', all_posts=all_posts)
+
+    else:
+        blogs = Blog.query.all()
+        return render_template('blogposts.html', blogs=blogs)
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def newpost():
@@ -139,20 +143,16 @@ def newpost():
         db.session.add(new_post)
         db.session.commit()
         id = new_post.id
-        return redirect('/singlepost?id={}'.format(id))
+        return redirect('/blogposts?id={}'.format(id))
 
     return render_template('newpost.html')
 
-@app.route('/blogposts', methods=['POST', 'GET'])
-def blog():
-
-    blogs = Blog.query.all()
-    return render_template('blogposts.html', blogs=blogs)
 
 @app.route('/index', methods=['GET'])
 def index():
     users = User.query.all()
     return render_template('index.html', users=users, title='title')
+
 
 if __name__ == '__main__':
     app.run()

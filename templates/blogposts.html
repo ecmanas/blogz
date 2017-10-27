@@ -7,7 +7,7 @@
     {% else %}
     
             {% for blog in blogs %}
-            <a href="/singlepost?id={{ blog.id }}">{{blog.title}}</a>
+            <a href="/blogposts?id={{blog.id}}">{{blog.title}}</a>
                 
             <p>
                 {{blog.body}}
@@ -15,7 +15,7 @@
                     <input type="hidden" name="blog-id" value="{{blog.id}}"/>
                 </form> -->
             </p>
-            <p>Written by <a href='/blogposts?id={{blog.owner.id}}'>{{blog.owner.username}}</a></p>
+            <p>Written by <a href='/blogposts?user={{blog.owner.id}}'>{{blog.owner.username}}</a></p>
             {% endfor %}
         
     {% endif %}
